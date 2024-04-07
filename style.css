@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto Mono", sans-serif;
+    list-style: none;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #5372f0;
+}
+
+.container {
+    width: 960px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 7px;
+}
+
+.wrapper {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.wrapper .text-input {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.text-input textarea {
+    height: 250px;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    border-radius: 5px;
+    background: none;
+    resize: none;
+    padding: 10px 15px;
+}
+
+.text-input .to-text {
+    border-radius: 0;
+    border-left: 1px solid #ddd;
+}
+
+.controls,
+li,
+.icons,
+.icons i {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.controls {
+    padding: 12px 15px;
+
+    .icons {
+        width: 38%;
+
+        i {
+            color: #9f9f9f9f;
+            font-size: 14px;
+            cursor: pointer;
+            width: 50px;
+            justify-content: center;
+        }
+
+    }
+
+    .row select {
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 18px;
+        /* direction: rtl; */
+    }
+
+    .exchange {
+        color: #9f9f9f;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .row.from .icons {
+        border-right: 1px solid #ddd;
+        padding-right: 15px;
+    }
+}
+
+.row.to .icons {
+    border-left: 1px solid #ddd;
+    padding-left: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: #5372f0;
+    font-size: 17px;
+    cursor: pointer;
+    color: white;
+    transition: .3s;
+
+    &:active {
+        transform: scale(0.99);
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        background-color: #2196F3;
+    }
+
+}
