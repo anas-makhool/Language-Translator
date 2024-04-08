@@ -4,6 +4,7 @@ let fromText = document.querySelector(".from-text");
 let toText = document.querySelector(".to-text");
 const exchangeIcon = document.querySelector(".exchange");
 const copyBtn = document.querySelectorAll("i");
+let change = false;
 
 selectTag.forEach((tag, id) => {
   for (const country_code in countries) {
@@ -59,21 +60,32 @@ copyBtn.forEach((ele, i) => {
     let utterance;
 
     if (target.classList.contains("fa-copy") && i == 1) {
-      console.log("copy one");
       textCopied = fromText.value;
-    } else if (target.classList.contains("fa-copy") && i == 4) {
-      console.log("copy two");
+    } else if (target.classList.contains("fa-copy") && i == 5) {
       textCopied = toText.value;
     } else if (target.classList.contains("fa-volume-up") && i == 0) {
-      console.log("volume one");
       textCopied = fromText.value;
       utterance = new SpeechSynthesisUtterance(textCopied);
       utterance.lang = selectTag[0].value;
-    } else if (target.classList.contains("fa-volume-up") && i == 3) {
-      console.log("volume two");
+    } else if (target.classList.contains("fa-volume-up") && i == 4) {
       textCopied = toText.value;
       utterance = new SpeechSynthesisUtterance(textCopied);
       utterance.lang = selectTag[1].value;
+    } else if (
+      target.classList.contains("fa-microphone") ||
+      (target.classList.contains("fa-square") && i == 2)
+    ) {
+      if (!change) {
+        target.className = "fa-solid fa-square";
+        target.classList.add("animation");
+        target.style.color = "white";
+        change = true;
+      } else {
+        target.className = "fa-solid fa-microphone";
+        target.classList.remove("animation");
+        target.style.color = "#9f9f9f9f";
+        change = false;
+      }
     }
 
     // Check if utterance is defined before attempting to speak

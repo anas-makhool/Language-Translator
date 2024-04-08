@@ -18,6 +18,7 @@ body {
     justify-content: center;
     min-height: 100vh;
     background-color: #5372f0;
+    flex-direction: column;
 }
 
 .container {
@@ -73,6 +74,7 @@ li,
             color: #9f9f9f9f;
             font-size: 14px;
             cursor: pointer;
+            height: 35px;
             width: 50px;
             justify-content: center;
         }
@@ -123,4 +125,67 @@ button {
         background-color: #2196F3;
     }
 
+}
+
+i:not(.fa-exchange-alt) {
+    transition: border-radius, background .3s;
+    width: 60px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    &:not(.animation):hover {
+        background-color: #9f9f9f2e;
+    }
+}
+
+.animation {
+
+    -webkit-animation: animate 1s infinite ease alternate;
+
+    animation: animate 1s infinite ease alternate;
+    background: #5372f0;
+    width: 60px;
+    height: 30px;
+    border-radius: 50%
+}
+
+
+
+@-webkit-keyframes animate {
+    0% {
+        box-shadow: 0px 0px 3px 0px #5372f087;
+    }
+
+    25% {
+        box-shadow: 0px 0px 3px 2px #5372f087;
+    }
+
+    50% {
+        box-shadow: 0px 0px 3px 4px #5372f087;
+    }
+
+    100% {
+        box-shadow: 0px 0px 3px 6px #5372f087;
+    }
+}
+
+
+
+@keyframes animate {
+    0% {
+        box-shadow: 0px 0px 3px 0px #5372f087;
+    }
+
+    25% {
+        box-shadow: 0px 0px 3px 2px #5372f087;
+    }
+
+    50% {
+        box-shadow: 0px 0px 3px 4px #5372f087;
+    }
+
+    100% {
+        box-shadow: 0px 0px 3px 6px #5372f087;
+    }
 }
