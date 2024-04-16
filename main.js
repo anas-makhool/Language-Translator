@@ -22,23 +22,27 @@ selectTag.forEach((tag, id) => {
 translateBtn.addEventListener("click", translateClick);
 
 async function translateClick() {
+  console.log("translate");
   let text = fromText.value;
   let translateFrom = selectTag[0].value;
   let translateTo = selectTag[1].value;
 
   let apiUrl = `https://api.mymemory.translated.net/get?q=${text}&langpair=${translateFrom}|${translateTo}`;
   toText.value = "";
-  if (text == "") {
-    toText.value = "";
-    return;
-  }
+
+  if (!text) return;
   toText.setAttribute("placeholder", "Translate...");
+
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
-
+    const textErrorMessage =
+      "NO QUERY SPECIFIED. EXAMPLE REQUEST: GET?Q=HELLO&LANGPAIR=EN|IT";
     toText.value = "";
     toText.value = data.responseData.translatedText;
+    if (toText.value === textErrorMessage) {
+      toText.value = fromText.value;
+    }
   } catch (error) {
     console.error("Error fetching translation:", error);
     toText.value = "";
@@ -52,6 +56,10 @@ exchangeIcon.onclick = () => {
     selectTag[1].value,
     selectTag[0].value,
   ];
+
+  fromText.setAttribute("placeholder", "Enter Text");
+  toText.setAttribute("placeholder", "translation");
+  translateClick();
 };
 
 copyBtn.forEach((ele, i) => {
@@ -80,11 +88,13 @@ copyBtn.forEach((ele, i) => {
         target.classList.add("animation");
         target.style.color = "white";
         change = true;
+        record(change, target);
       } else {
         target.className = "fa-solid fa-microphone";
         target.classList.remove("animation");
         target.style.color = "#9f9f9f9f";
         change = false;
+        record(change, target);
       }
     }
 
@@ -97,3 +107,59 @@ copyBtn.forEach((ele, i) => {
     }
   };
 });
+
+// Event handle speak audio
+function record(ch, e) {
+  if (ch) {
+    if ("SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+      // Create a new instance of SpeechRecognition
+      const recognition = new (window.SpeechRecognition ||
+        window.webkitSpeechRecognition)();
+
+      // Set some properties
+      recognition.lang = selectTag[0].value;
+      recognition.interimResults = true; // Get interim results
+
+      // Event handler when the recognition starts
+      recognition.onstart = function () {
+        console.log("Listening...");
+        fromText.setAttribute("placeholder", "Listening...");
+      };
+
+      // Event handler for when the recognition results are available
+      recognition.onresult = function (event) {
+        fromText.value = "";
+        const transcript = event.results[0][0].transcript;
+        fromText.value = transcript;
+      };
+
+      // Event handler when the recognition ends
+      recognition.onend = function () {
+        console.log("Stopped listening.");
+        e.click();
+      };
+
+      // Event handler for errors
+      recognition.onerror = function (event) {
+        console.error("Error occurred:", event.error);
+      };
+
+      recognition.start();
+    } else {
+      console.error("Speech recognition is not supported by your browser.");
+    }
+  } else {
+    translateClick();
+    console.log("of");
+  }
+}
+
+let typingTimer;  
+
+fromText.oninput = function (e) {
+  clearTimeout(typingTimer); 
+
+  typingTimer = setTimeout(function () {
+    translateClick();
+  }, 500);
+};
